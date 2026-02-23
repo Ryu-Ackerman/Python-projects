@@ -16,8 +16,8 @@ def audio_dl():
     url = input('Enter the url: ')
     configs = {
         'format': 'bestaudio/best',
-        'outtmpl': r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s',
-        'ffmpeg_location': r'C:\Users\User\AppData\Local\Microsoft\WinGet\Links',
+        'outtmpl': r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s',#the directory on which the downloaded item will be saved
+        'ffmpeg_location': r'C:\Users\User\AppData\Local\Microsoft\WinGet\Links',#if I download a video and I want its audio this will automatically send it to songs folder
         'postprocessors': [
             {
                 'key': 'FFmpegExtractAudio',
@@ -26,7 +26,7 @@ def audio_dl():
             }
         ]
     }
-    with yd.YoutubeDL(configs) as aud_dl:
+    with yd.YoutubeDL(configs) as aud_dl:# same as aud_dl = yd.YoutubeDL(configs)
         aud_dl.download([url])
 
 commands = {
