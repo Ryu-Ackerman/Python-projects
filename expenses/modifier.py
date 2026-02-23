@@ -1,7 +1,5 @@
 import json
-import pytz
 from datetime import datetime
-import requests
 import csv
 from os import path
 
@@ -19,15 +17,9 @@ class Writecsv():
         return dict_
         
 
-def clean():
-    r = requests.get('https://ipinfo.io/json')
-    j = r.json()
+def modify():
+    date = datetime.now().astimezone()
 
-    zone = j['timezone']
-
-    timezone = pytz.timezone(zone)
-
-    date = datetime.now(timezone)
 
     MONTHS = {'1': 'Jan', '2': 'Feb', '3': 'Mar', '4': 'Apr',
             '5': 'May','6': 'Jun', '7': 'Jul','8': 'Aug',

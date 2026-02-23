@@ -3,8 +3,7 @@ import csv
 from datetime import datetime
 import collections
 import json
-import pytz
-from cleaner import clean
+from modifier import modify #from the modifier.py file importing the modify() inside
 
 class Local:
 
@@ -15,8 +14,7 @@ class Local:
         self.day = day
 
 
-timezone = pytz.timezone("Asia/Samarkand")
-date_s = datetime.now(timezone)
+date_s = datetime.now().astimezone()
 local = Local(date_s.year, date_s.month, date_s.day)
 
 
@@ -44,35 +42,31 @@ class Transaction:
         
 
 def get_data():
-    fi = input('For: ')
-    se = input('Amount: ')
-    return fi, se
+    first = input('For: ')
+    second = input('Amount: ')
+    return first, second
 
 
-def how_much():
+def how_much():#not fully complete yet
 
+    total = 0
     days = int(input("Enter the number of days you wanna see: "))
     lst = []
     nums = []
-    with open('tracker.csv') as f:
+    with open('test_date.json') as f:
 
-        reader = csv.DictReader(f)
+        reader = json.load(f)
         lines = collections.deque(reader, days)
-
-        for i in lines: lst.append(i['amount'])
-        for x in lst:
-            try:
-                x = float(x)
-                nums.append(x)
-            except ValueError:
-                    pass
+        for i in lines:
+            if days > len(lines): sys.exit('there arent as many days in the history')
+            else:
+                day_amount = float((reader[str(i)]['amount']))
+                total += day_amount
+                nums.append(day_amount)
+                lst.append(int(i))
             
-        total = sum(nums)
-        med = sum(nums)/len(nums)
-
-        print("Here is your recorded expenditure:")
-        print(f"The total amount: {total}")
-        print(f'Normally how much you spent: {round(med, 1)}')
+    print(f'The total spent money on the given days is {total}')
+    print(f'The average spent money on the given days is {sum(nums)/len(nums)}')
 
 
 def new():
@@ -85,7 +79,6 @@ def new():
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             category, amount= get_data()
             t = Transaction(category, amount, local_)
-            # writer.writeheader()
             writer.writerow(t.turn_dict())
             
         with open('category.json') as f:
@@ -155,5 +148,5 @@ def main():
 
 
 if __name__ == "__main__":
-    clean()
+    modify()
     main()
