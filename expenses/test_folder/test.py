@@ -65,13 +65,13 @@ def how_much():
                     lst.append(int(i))
                 except KeyError:
                     pass
-                    if days > len(nums):
-                        days -= 1
-                        user = input(f'There are {days} days available still continue? y/n: ')
-                        if user == 'y':
-                            pass
-                        else:
-                            sys.exit('successfully quit')
+        if days > len(nums):
+            days -= 1
+            user = input(f'There are {days} days available still continue? y/n: ')
+            if user == 'y':
+                pass
+            else:
+                sys.exit('successfully quit')
             
     print(f'The total spent money on {days} days is {total}')
     print(f'The average spent money on the given days is {sum(nums)/len(nums)}')
