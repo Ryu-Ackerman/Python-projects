@@ -47,26 +47,45 @@ def get_data():
     return first, second
 
 
-def how_much():#not fully complete yet
-
+def how_much():
     total = 0
     days = int(input("Enter the number of days you wanna see: "))
     lst = []
     nums = []
-    with open('test_date.json') as f:
+    with open('date.json') as f:
 
         reader = json.load(f)
         lines = collections.deque(reader, days)
         for i in lines:
             if days > len(lines): sys.exit('there arent as many days in the history')
             else:
-                day_amount = float((reader[str(i)]['amount']))
-                total += day_amount
-                nums.append(day_amount)
-                lst.append(int(i))
+                try:
+                    day_amount = float((reader[str(i)]['amount']))
+                    total += day_amount
+                    nums.append(day_amount)
+                    lst.append(int(i))
+                except KeyError:
+                    pass
+        if days > len(nums):
+            days -= 1
+            user = input(f'There are {days} days available still continue? y/n: ')
+            if user == 'y': pass
+            else: sys.exit('successfully quit!')
             
-    print(f'The total spent money on the given days is {total}')
-    print(f'The average spent money on the given days is {sum(nums)/len(nums)}')
+        for index,x in enumerate(lst):
+            try:
+                if lst[index] != (lst[index+1]) - 1:
+                    print(f'There is a {lst[index+1]-lst[index]} day difference!')
+                    usr = input('Still continue? y/n: ')
+                    if usr == 'y':
+                        print(f'The total spent money on {days} days is {total}| {lst[index+1]-lst[index]} day difference')
+                        print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
+                    else:
+                        sys.exit('Successfully quit!')
+                else:
+                    print(f'The total spent money on {days} days is {total}')
+                    print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
+            except IndexError: pass
 
 
 def new():
