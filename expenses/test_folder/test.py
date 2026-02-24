@@ -68,13 +68,25 @@ def how_much():
         if days > len(nums):
             days -= 1
             user = input(f'There are {days} days available still continue? y/n: ')
-            if user == 'y':
-                pass
-            else:
-                sys.exit('successfully quit')
+            if user == 'y': pass
+            else: sys.exit('successfully quit!')
             
-    print(f'The total spent money on {days} days is {total}')
-    print(f'The average spent money on the given days is {sum(nums)/len(nums)}')
+        for index,x in enumerate(lst):
+            try:
+                if lst[index] != (lst[index+1]) - 1:
+                    print(f'There is a {lst[index+1]-lst[index]} day difference!')
+                    usr = input('Still continue? y/n: ')
+                    if usr == 'y':
+                        print(f'The total spent money on {days} days is {total}| {lst[index+1]-lst[index]} day difference')
+                        print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
+                    else:
+                        sys.exit('Successfully quit!')
+                else:
+                    print(f'The total spent money on {days} days is {total}')
+                    print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
+            except IndexError: pass
+
+
 
 
 def new():
