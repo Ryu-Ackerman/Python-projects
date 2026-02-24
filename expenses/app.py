@@ -57,34 +57,41 @@ def how_much():
         reader = json.load(f)
         lines = collections.deque(reader, days)
         for i in lines:
-            if days > len(lines): sys.exit('there arent as many days in the history')
-            else:
-                try:
-                    day_amount = float((reader[str(i)]['amount']))
-                    total += day_amount
-                    nums.append(day_amount)
-                    lst.append(int(i))
-                except KeyError:
-                    pass
+            try:
+                day_amount = float((reader[str(i)]['amount']))
+                total += day_amount
+                nums.append(day_amount)
+                lst.append(int(i))
+            except KeyError:
+                pass
         if days > len(nums):
-            days -= 1
-            user = input(f'There are {days} days available still continue? y/n: ')
-            if user == 'y': pass
-            else: sys.exit('successfully quit!')
+            ndays = days - len(nums)
+            fdays = days - ndays
+            while True:
+                user = input(f'There are only {fdays} days available still continue? y/n: ')
+                if user == 'y': break
+                elif user == 'n': sys.exit('successfully quit!')
+                else: 
+                    print('Uknown input!')
+                    continue
             
         for index,x in enumerate(lst):
             try:
                 if lst[index] != (lst[index+1]) - 1:
-                    print(f'There is a {lst[index+1]-lst[index]} day difference!')
-                    usr = input('Still continue? y/n: ')
-                    if usr == 'y':
-                        print(f'The total spent money on {days} days is {total}| {lst[index+1]-lst[index]} day difference')
-                        print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
-                    else:
-                        sys.exit('Successfully quit!')
+                    while True:
+                        usr = input(f'There is a {lst[index+1]-lst[index]} day difference still continue? y/n: ')
+                        if usr == 'y':
+                            print(f'{'-'*30}\nThe total spent money in {days} days is {total} | {lst[index+1]-lst[index]} day difference')
+                            print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                            sys.exit()
+                        elif user == 'n': sys.exit('Successfully quit!')
+                        else:
+                            print('Uknown input!')
+                            continue
                 else:
-                    print(f'The total spent money on {days} days is {total}')
-                    print(f'The average spent money on the given days is {round(sum(nums)/len(nums), 1)}')
+                    print(f'{'-'*30}The total spent money in {days} days is {total}')
+                    print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                    sys.exit()
             except IndexError: pass
 
 
