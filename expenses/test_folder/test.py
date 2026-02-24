@@ -58,12 +58,22 @@ def how_much():
         for i in lines:
             if days > len(lines): sys.exit('there arent as many days in the history')
             else:
-                day_amount = float((reader[str(i)]['amount']))
-                total += day_amount
-                nums.append(day_amount)
-                lst.append(int(i))
+                try:
+                    day_amount = float((reader[str(i)]['amount']))
+                    total += day_amount
+                    nums.append(day_amount)
+                    lst.append(int(i))
+                except KeyError:
+                    pass
+                    if days > len(nums):
+                        days -= 1
+                        user = input(f'There are {days} days available still continue? y/n: ')
+                        if user == 'y':
+                            pass
+                        else:
+                            sys.exit('successfully quit')
             
-    print(f'The total spent money on the given days is {total}')
+    print(f'The total spent money on {days} days is {total}')
     print(f'The average spent money on the given days is {sum(nums)/len(nums)}')
 
 

@@ -101,7 +101,7 @@ def new():
                 json.dump(fjson, f, indent=4)
 
         with open('date.json') as f:
-                reader = json.load(f)
+            reader = json.load(f)
 
         famount = float(amount)
 

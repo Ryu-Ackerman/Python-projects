@@ -1,8 +1,11 @@
 {
     "total_money": {
-        "amount": 9990.0
+        "amount": -14010.0
     },
     "transport": {
-        "amount": 10000.0
+        "amount": 20000.0
+    },
+    "drink": {
+        "amount": 14000.0
     }
 }
