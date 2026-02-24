@@ -110,7 +110,6 @@ def a1_end(level, teacher):
 def handle_levels(level, teacher):
 
     lst = []
-    fieldnames = ['teacher', 'level', 'average']
     multiplier = LEVELS.get(level)
 
     while True:
@@ -175,12 +174,9 @@ def end_of_year():
     level = input('Enter the level: ').capitalize()
 
 
-    if level in LEVELS:
-        handle_levels(level, teacher)
-    elif level in ('A1', 'A1+'):
-        a1_end(level, teacher)
-    else:
-        sys.exit('Uknown level!')
+    if level in LEVELS: handle_levels(level, teacher)
+    elif level in ('A1', 'A1+'): a1_end(level, teacher)
+    else: sys.exit('Uknown level!')
 
 
 
@@ -209,7 +205,7 @@ def averagebyteacher():
                             how_many_test += 1 
                             lst.append(float(i['average']))
 
-                line = '-'*57
+                line = '-'*57 #a line over and under data
                 try:
                     avrg = sum(lst)/len(lst)
                 except ZeroDivisionError:
