@@ -39,12 +39,6 @@ class Transaction:
                 "amount": self.amount,
                 "date": self.date_s
             }
-        
-
-def get_data():
-    first = input('For: ')
-    second = input('Amount: ')
-    return first, second
 
 
 def how_much():
@@ -96,6 +90,14 @@ def how_much():
 
 
 def new():
+
+
+    def get_data():
+        first = input('For: ')
+        second = input('Amount: ')
+        return first, second
+    
+    
 
     while True:
 
