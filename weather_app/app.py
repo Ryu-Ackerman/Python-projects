@@ -110,17 +110,25 @@ def forecast():
                 day = m[8:10]
                 lst_date.append(day)
 
+            dict_ = {
+                '01': 'st', '02': 'nd', '03': 'rd'
+            }
+            for k in range(4,32):
+                if k < 10: dict_[f'0{k}'] = 'th'
+                dict_[f'{k}'] = 'th'
+
             month = MONTHS[f'{month}']
 
 
             print(f'{'-'*10}\n{'Highest-Lowest'}\n{'-'*10}')
+            
 
             for z,i,x,y,t in zip(ind,maxt, mint, range(len(WEEK)), lst_date):
                 y = (ind_day+y)%7#the remainder is the day of the week in sequence, if it is wednesday the ind_day is 3 and it will be added 0 first and wednesday will be given, then 1 will be added and index 4 and thursday
                 if i < 10.0: i = f"0{i}"
                 if x < 10.0: x = f"0{x}"
 
-                print(f'{z}){i}°C|{x}°C || {month} {t} |{WEEK[y]}')
+                print(f'{z}){i}°C|{x}°C || {month} {t}{dict_[t]} |{WEEK[y]}')
 
 
             print(f'{'-'*10}\n{'Highest-Lowest (average)'}\n{'-'*10}')
