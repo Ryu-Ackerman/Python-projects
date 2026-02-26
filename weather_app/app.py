@@ -28,14 +28,14 @@ class Collect_data():
             'date-time': self.date
         }
 
-
 WEEK = [
     'Monday','Tuesday','Wednesday',
     'Thursday','Friday','Saturday',
     'Sunday'
 ]
 
-MONTHS = {'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+MONTHS = {
+        '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
         '05': 'May','06': 'Jun', '07': 'Jul','08': 'Aug',
         '09': 'Sep','10': 'Oct','11': 'Nov','12': 'Dec'
 }
@@ -120,7 +120,7 @@ def forecast():
                 if i < 10.0: i = f"0{i}"
                 if x < 10.0: x = f"0{x}"
 
-                print(f'{z}){i}°C|{x}°C || {month} {t}th |{WEEK[y]}')
+                print(f'{z}){i}°C|{x}°C || {month} {t} |{WEEK[y]}')
 
 
             print(f'{'-'*10}\n{'Highest-Lowest (average)'}\n{'-'*10}')
