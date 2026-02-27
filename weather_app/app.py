@@ -43,21 +43,28 @@ MONTHS = {
 
 
 def forecast():
+
     while True:
+
         c = input('Enter the city/country name: ').lower()
         api_1 = f'https://geocoding-api.open-meteo.com/v1/search?name={c}'
         if c == 'q' or c == 'quit':
             sys.exit('Successfully quit!')
 
         try:
+
             r = requests.get(api_1)
             j = r.json()
+
             try:
+
                 if not j['results']:
                     sys.exit("City not found. Check the spelling please!")
                 for index, i in enumerate(j['results']):#list all the available cities/countries with the given name
                     print(f"{index+1}){i['name']}, {i['country']}")
+
             except KeyError:
+
                 print('Invalid city/country name!')
                 continue
     
@@ -100,7 +107,7 @@ def forecast():
                 lng=longitude,
                 lat=latitude
             )
-            
+
 
             current = datetime.now(ZoneInfo(zone))
             day = current.strftime('%A')#finding the day of the week with a given city/country name
@@ -121,8 +128,10 @@ def forecast():
             
 
             for z,i,x,y,t in zip(ind,maxt, mint, range(len(WEEK)), dates):
-                month = t[5:7]
+
+                month = MONTHS[str(t[5:7])]
                 day = t[8:10]
+
                 y = (ind_day+y)%7#the remainder is the day of the week in sequence, if it is wednesday the ind_day is 3 and it will be added 0 first and wednesday will be given, then 1 will be added and index 4 and thursday
                 if i < 10.0: i = f"0{i}"
                 if x < 10.0: x = f"0{x}"
@@ -186,7 +195,7 @@ def get_country():
         day = j2['is_day']
         date = j2['time']
         
-        l = '-'*10
+        l = '-'*26
         print(f"{l}\nThe temperature is {temp}°C")
         print(f"The windspeed is {w_S} km/h")
 
@@ -231,24 +240,27 @@ def days(directory, num_of_days, c_name):#an average temperature and windspeed c
         avgt = sum(tem)/len(tem)
         avgw = sum(w__s)/len(w__s)
         last_days = len(nm)
+
         if num_of_days > last_days: raise ValueError#if the user input is higher than the available number of searches in csv it will raise a ValueError
         else: pass
-        print(f'The average temperature in the last {num_of_days} search(es) is {round(avgt, 1)}°C')
-        print(f'The average windspeed in the last {num_of_days} search(es) is {round(avgw, 1)} km/h')
+        
+        if num_of_days > 1: print(f'{'-'*31}\nNumber of searches: {num_of_days} searches\nTemperature: {round(avgt,1)}°C (average)\nWindspeed: {round(avgw,1)} km/h (average)\n{'-'*31}')
+        else: print(f'{'.'*29}\nNumber of searches: {num_of_days} search\nTemperature: {round(avgt,1)}°C\nWindspeed: {round(avgw,1)} km/h\n{'.'*29}')
 
 
 
 
 def average():  
-        cname = input('Enter the city/country name: ')
+
         while True:
             try:
-                dys = input('Enter the number of days you wanna see the average of: ').lower()
+                cname = input('Enter the city/country name: ')
+                dys = input('Enter the number of searches you wanna see the average of: ').lower()
                 days('kregg.csv', int(dys), cname)
 
 
                 sys.exit()
-            except ValueError:
+            except (ValueError,ZeroDivisionError):
 
                 if dys != 'quit':#if the user does not quit nor choose quit or a number this error will be raised
                     print('Invalid input or the given city/country has not been searched this many times!')
@@ -283,10 +295,8 @@ def main():
     if len(sys.argv) < 2:
         sys.exit("Not enough arguments on the terminal!\n-h for for help")
     command = funcs.get(sys.argv[1])
-    if command:
-        command()
-    else:
-        get_country()
+    if command: command()
+    else: get_country()
 
 
 if __name__ == "__main__":
