@@ -63,15 +63,20 @@ def forecast():
     
 
             while True:
+
                 try:
+
                     user = input("Enter the number of the intended city/country: ").lower()
                     if int(user) < 1 or int(user) > len(j['results']):#if the user chooses a number that does not match the index start the loop again
+
                         print('Input out of range!')
                         continue
+                    
                     break
+
                 except ValueError:
-                    if user == "quit":
-                        sys.exit('You successfully quit the program!')
+
+                    if user == "quit": sys.exit('You successfully quit the program!')
                     else:
                         print("Invalid input!")
                         continue
@@ -95,8 +100,7 @@ def forecast():
                 lng=longitude,
                 lat=latitude
             )
-
-            lst_date = []
+            
 
             current = datetime.now(ZoneInfo(zone))
             day = current.strftime('%A')#finding the day of the week with a given city/country name
@@ -105,33 +109,28 @@ def forecast():
             dates = j2['daily']['time'] #[0] at the end cuz inde returns a list and to extract a value from it we just specify the item we want
 
 
-            for m in dates:
-                month = m[5:7]
-                day = m[8:10]
-                lst_date.append(day)
-
             dict_ = {
                 '01': 'st', '02': 'nd', '03': 'rd'
             }
             for k in range(4,32):
                 if k < 10: dict_[f'0{k}'] = 'th'
-                dict_[f'{k}'] = 'th'
-
-            month = MONTHS[f'{month}']
+                dict_[f'{k}'] = 'th' #this is same as appending in a list
 
 
-            print(f'{'-'*10}\n{'Highest-Lowest'}\n{'-'*10}')
+            print(f'{'-'*14}\n{'Highest-Lowest'}\n{'-'*14}')
             
 
-            for z,i,x,y,t in zip(ind,maxt, mint, range(len(WEEK)), lst_date):
+            for z,i,x,y,t in zip(ind,maxt, mint, range(len(WEEK)), dates):
+                month = t[5:7]
+                day = t[8:10]
                 y = (ind_day+y)%7#the remainder is the day of the week in sequence, if it is wednesday the ind_day is 3 and it will be added 0 first and wednesday will be given, then 1 will be added and index 4 and thursday
                 if i < 10.0: i = f"0{i}"
                 if x < 10.0: x = f"0{x}"
 
-                print(f'{z}){i}°C|{x}°C || {month} {t}{dict_[t]} |{WEEK[y]}')
+                print(f'{z}){i}°C|{x}°C || {month} {day}{dict_[day]} |{WEEK[y]}')
 
 
-            print(f'{'-'*10}\n{'Highest-Lowest (average)'}\n{'-'*10}')
+            print(f'{'-'*24}\n{'Highest-Lowest (average)'}\n{'-'*24}')
             avg = f"{round(sum(maxt)/len(maxt), 1)}°C|{round(sum(mint)/len(mint), 1)}°C"
 
             sys.exit(avg)
