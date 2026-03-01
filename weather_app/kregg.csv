@@ -1,6 +1,4 @@
 city,temperature,windspeed,date-time
-samarkand,14.7,7.6,2026-02-14T09:30
-samarkand,14.7,7.6,2026-02-14T09:30
 samarkand,14.8,7.9,2026-02-14T09:45
 samarkand,14.8,7.9,2026-02-14T09:45
 samarkand,14.5,7.0,2026-02-14T12:30
@@ -29,3 +27,5 @@ samarkand,8.9,21.5,2026-02-26T05:45
 samarkand,12.5,17.0,2026-02-27T09:15
 samarkand,12.5,17.0,2026-02-27T09:15
 samarkand,12.5,17.0,2026-02-27T09:15
+samarkand,3.4,6.8,2026-03-01T02:45
+samarkand,5.5,5.8,2026-03-01T03:45
