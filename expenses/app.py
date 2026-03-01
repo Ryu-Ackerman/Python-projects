@@ -3,24 +3,17 @@ import csv
 from datetime import datetime
 import collections
 import json
-from modifier import modify #from the modifier.py file importing the modify() inside
-
-class Local:
-
-    def __init__(self, year, month, day):
-
-        self.year = year
-        self.month = month
-        self.day = day
+from modifier import modify
 
 
 date_s = datetime.now().astimezone()
-local = Local(date_s.year, date_s.month, date_s.day)
 
 
-if local.month < 10: local.month = f"0{local.month}"
-if local.day < 10: local.day = f"0{local.day}"
-local_ = f"{local.year}-{local.month}-{local.day}"
+if date_s.month < 10: month = f"0{date_s.month}"
+if date_s.day < 10: day = f"0{date_s.day}"
+
+
+local_ = f"{date_s.year}-{month}-{day}"
         
 
 class Transaction:
@@ -42,14 +35,17 @@ class Transaction:
 
 
 def how_much():
+
     total = 0
     days = int(input("Enter the number of days you wanna see: "))
     lst = []
     nums = []
+
     with open('date.json') as f:
 
         reader = json.load(f)
         lines = collections.deque(reader, days)
+
         for i in lines:
             try:
                 day_amount = float((reader[str(i)]['amount']))
@@ -58,6 +54,7 @@ def how_much():
                 lst.append(int(i))
             except KeyError:
                 pass
+            
         if days > len(nums):
             ndays = days - len(nums)
             fdays = days - ndays
@@ -133,10 +130,10 @@ def new():
 
         famount = float(amount)
 
-        if str(local.day) in reader:
-            famount += reader[str(local.day)]['amount']
+        if str(date_s.day) in reader:
+            famount += reader[str(date_s.day)]['amount']
 
-        reader[str(local.day)] = {
+        reader[str(date_s.day)] = {
             'amount': famount
             }
         
