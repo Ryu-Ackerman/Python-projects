@@ -2,12 +2,18 @@ import yt_dlp as yd
 from pathlib import Path
 import os
 import sys
+import platform
+
+if platform.system() == 'Windows':
+    dir_out = r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s'
+else:
+    dir_out = r'/mnt/e/Python_projects/downloaded_stuff/songs/%(title)s.%(ext)s'
 
 def video_downloader():
     url = input('Enter the url: ')
     configs = {
         'format': 'bestvideo[height<=1080]',
-        'outtmpl': r'E:\Python_projects\downloaded_stuff\videos\%(title)s.%(ext)s',
+        'outtmpl': dir_out,
         'nonplaylist': True
     }
     with yd.YoutubeDL(configs) as somth:
@@ -16,10 +22,10 @@ def video_downloader():
 
 def audio_dl():
     url = input('Enter the url: ')
+    
     configs = {
         'format': 'bestaudio/best',
-        'outtmpl': r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s',#the directory on which the downloaded item will be saved
-        'ffmpeg_location': r'C:\Users\User\AppData\Local\Microsoft\WinGet\Links',#if I download a video and I want its audio this will automatically send it to songs folder
+        'outtmpl': dir_out,#the directory in which the downloaded item will be saved
         'postprocessors': [
             {
                 'key': 'FFmpegExtractAudio',
@@ -28,10 +34,10 @@ def audio_dl():
             }
         ]
     }
+    
     with yd.YoutubeDL(configs) as aud_dl:# same as aud_dl = yd.YoutubeDL(configs)
 
-        aud_dl.download([url])
-        info = aud_dl.extract_info(url, download=False)
+        info = aud_dl.extract_info(url, download=True)
         file_name = aud_dl.prepare_filename(info)
         name = os.path.splitext(file_name)[0]
         file = Path(name+'.mp3')
