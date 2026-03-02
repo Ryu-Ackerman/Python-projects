@@ -21,12 +21,13 @@ def modify():
 
     date = datetime.now().astimezone()
 
-    MONTHS = {'1': 'Jan', '2': 'Feb', '3': 'Mar', '4': 'Apr',
-            '5': 'May','6': 'Jun', '7': 'Jul','8': 'Aug',
-            '9': 'Sep','10': 'Oct','11': 'Nov','12': 'Dec'
+    MONTHS = {
+        '1': 'Jan', '2': 'Feb', '3': 'Mar', '4': 'Apr',
+        '5': 'May','6': 'Jun', '7': 'Jul','8': 'Aug',
+        '9': 'Sep','10': 'Oct','11': 'Nov','12': 'Dec'
     }
 
-    file_exist = path.isfile('monthly.csv')
+    file_exists = path.isfile('monthly.csv')
 
     with open('date.json') as f:
 
@@ -83,7 +84,7 @@ def modify():
             with open('monthly.csv', 'a', newline='') as f:
 
                 writer = csv.DictWriter(f, fieldnames=['month','amount'])
-                if not file_exist:
+                if not file_exists:
                     writer.writeheader()
                 if date.month == '1': data = Writecsv(MONTHS['12'], total)# if it is January then the in monthly.csv will be written Dec.
                 else: data = Writecsv(MONTHS[str(date.month-1)], total)#otherwise just the previous month

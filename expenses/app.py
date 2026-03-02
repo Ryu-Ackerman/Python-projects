@@ -35,7 +35,7 @@ class Transaction:
 
 
 def how_much():
-
+    differences = []
     total = 0
     days = int(input("Enter the number of days you wanna see: "))
     lst = []
@@ -66,26 +66,28 @@ def how_much():
                     print('Uknown input!')
                     continue
             
-        for index,x in enumerate(lst):
+        for index in range(len(lst)):
             try:
-                if lst[index] != (lst[index+1]) - 1:
-                    while True:
-                        usr = input(f'There is a {lst[index+1]-lst[index]} day difference still continue? y/n: ')
-                        if usr == 'y':
-                            print(f'{'-'*30}\nThe total spent money in {days} days is {total} | {lst[index+1]-lst[index]} day difference')
-                            print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
-                            sys.exit()
-                        elif user == 'n': sys.exit('Successfully quit!')
-                        else:
-                            print('Uknown input!')
-                            continue
-                else:
-                    print(f'{'-'*30}The total spent money in {days} days is {total}')
-                    print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
-                    sys.exit()
+                if lst[index+1] - lst[index] > 1:
+                    differences.append(lst[index+1]-lst[index])
             except IndexError: pass
 
-
+        while True:
+            if differences:
+                for l in range(len(differences)):
+                    usr = input(f"{differences[0+l]} day difference found! Still continue (y/n)? ")
+                if usr == 'y':
+                    print(f'{'-'*30}\nThe total spent money in {days} days is {total} | overall {sum(differences)} day difference')
+                    print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                    break
+                elif user == 'n': sys.exit('Successfully quit!')
+                else:
+                    print('Uknown input!')
+                    continue
+            else:
+                print(f'{'-'*30}\nThe total spent money in {days} days is {total}')
+                print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                break
 def new():
 
 
