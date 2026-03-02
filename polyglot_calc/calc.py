@@ -3,33 +3,26 @@ import sys
 
 
 
-class Holder():
-
     
-    def __init__(self, teacher, level, average):
+def SaveFile(teacher, level, file_name, lst):
 
-        self.teacher = teacher
-        self.level = level
-        self.average = average
+    try:
+        average = round(sum(lst)/len(lst), 1)
+    except ZeroDivisionError:
+        sys.exit('No data entered!')
 
-    def turn_to_dict(self):
+    dict_ = {
+        'teacher': teacher, 'level': level, 'average': average
+    }
 
-        return {
-            'teacher': self.teacher,
-            'level': self.level,
-            'average': self.average
-        }
-    
-    def save_file(self, file_name):
+    fieldnames = ['teacher', 'level', 'average']
+    with open(f'{file_name}.csv', 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writerow(dict_)
+    sys.exit(f'The class average is {average}%')
 
-        fieldnames = ['teacher', 'level', 'average']
-        with open(f'{file_name}.csv', 'a', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writerow(self.turn_to_dict())
-    
-
-
-
+        
+#this constant is for end of years, the reason A1 and A1+ are missing is that they have slightly different way of being calculated
 LEVELS = {
     'A2': 0.9,
     'B1': 1/1.14,
@@ -41,28 +34,19 @@ def review_test():
     
     teacher = input('Enter the teacher name: ')
     level = input('Enter the level: ')
-    ans = []
+    lst = []
     fieldnames = ['teacher', 'level', 'average']
 
     while True:
 
         correct_answers = input('Enter the total correct ans or q for quit: ').lower()
         if correct_answers == 'quit' or correct_answers == 'q':
+            SaveFile(teacher, level, 'review', lst)
 
-            try:
-
-                avg = round(sum(ans)/len(ans), 1)
-                hr = Holder(teacher, level, avg)
-                hr.save_file('review')
-                sys.exit(f'The average is {avg}%')
-
-            except ZeroDivisionError:
-
-                sys.exit('No data entered!')
         else:
 
             overall = int(correct_answers) / 0.7
-            ans.append(overall)
+            lst.append(overall)
             print(f"{round(overall, 1)}%")
 
             continue
@@ -79,15 +63,7 @@ def a1_end(level, teacher):
 
             correct_ans = input('Enter the number of correct ans or q for quit: ')
             if correct_ans == 'q':
-
-                try:
-
-                    avg = round(sum(lst)/len(lst), 1)
-                    hr = Holder(teacher, level, avg)
-                    hr.save_file('end')
-                    sys.exit(f'The class average is {avg}%')
-                except ZeroDivisionError:
-                    sys.exit('No data entered!')
+                SaveFile(teacher, level, 'end', lst)
 
             else:
 
@@ -103,7 +79,7 @@ def a1_end(level, teacher):
 
                 except ValueError:
 
-                    print('input and int!') 
+                    print('input an int!') 
                     continue
 
 
@@ -125,18 +101,7 @@ def handle_levels(level, teacher):
                 continue
 
             if reading == 'q' or listening == 'q':
-
-                try:
-
-                    avg = round(sum(lst)/len(lst), 1)
-                    hr = Holder(teacher, level, avg)
-                    hr.save_file('end')
-                    sys.exit(f"The class avg {avg}%")
-
-                except ZeroDivisionError:
-
-
-                    sys.exit('No data entered!')
+                SaveFile(teacher, level, 'end', lst)
 
             else:
 
@@ -154,16 +119,17 @@ def handle_levels(level, teacher):
                     writing = input('Enter the writing: ')                    
                     speaking = input("Enter the speaking: ")
                     if writing == 'q' or speaking == 'q':
-                        try:
-                            sys.exit(f'The class average is {round(avg, 1)}%')
-                        except ZeroDivisionError:
-                            sys.exit('No data entered!')
+                        SaveFile(teacher, level, 'end', lst)
+
                     try:
+
                         total = pre_total + int(writing) + int(speaking)
                         lst.append(total)
                         print(f"{round(total, 1)}%")
                         break
+
                     except ValueError:
+
                         print('The last input was not an int!')
                         continue
 
