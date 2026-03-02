@@ -4,10 +4,10 @@ import os
 import sys
 import platform
 
-if platform.system() == 'Windows':
-    dir_out = r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s'
+if platform.system() == 'Windows':#Make sure to change the directory according to your file and folder location before using
+    dir_out = r'E:\Python_projects\downloaded_stuff\songs\%(title)s.%(ext)s'#for Windows Powershell
 else:
-    dir_out = r'/mnt/e/Python_projects/downloaded_stuff/songs/%(title)s.%(ext)s'
+    dir_out = r'/mnt/e/Python_projects/downloaded_stuff/songs/%(title)s.%(ext)s'#for WSL
 
 def video_downloader():
     url = input('Enter the url: ')
@@ -25,7 +25,7 @@ def audio_dl():
     
     configs = {
         'format': 'bestaudio/best',
-        'outtmpl': dir_out,#the directory in which the downloaded item will be saved
+        'outtmpl': dir_out,
         'postprocessors': [
             {
                 'key': 'FFmpegExtractAudio',
