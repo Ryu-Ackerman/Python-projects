@@ -62,9 +62,7 @@ def a1_end(level, teacher):
 
 
             correct_ans = input('Enter the number of correct ans or q for quit: ')
-            if correct_ans == 'q':
-                SaveFile(teacher, level, 'end', lst)
-
+            if correct_ans == 'q': SaveFile(teacher, level, 'end', lst)
             else:
 
                 overall = int(correct_ans) * 70/80
@@ -100,8 +98,7 @@ def handle_levels(level, teacher):
                 print('Invalid input!')
                 continue
 
-            if reading == 'q' or listening == 'q':
-                SaveFile(teacher, level, 'end', lst)
+            if reading == 'q' or listening == 'q': SaveFile(teacher, level, 'end', lst)
 
             else:
 
@@ -118,8 +115,8 @@ def handle_levels(level, teacher):
                     
                     writing = input('Enter the writing: ')                    
                     speaking = input("Enter the speaking: ")
-                    if writing == 'q' or speaking == 'q':
-                        SaveFile(teacher, level, 'end', lst)
+
+                    if writing == 'q' or speaking == 'q': SaveFile(teacher, level, 'end', lst)
 
                     try:
 
@@ -157,7 +154,7 @@ def averagebyteacher():
 
         else:
 
-            how_many_test = 0
+            how_many_tests = 0
 
             while True:
 
@@ -168,7 +165,7 @@ def averagebyteacher():
                     reader = csv.DictReader(f)
                     for i in reader:
                         if teacher == i['teacher']:
-                            how_many_test += 1 
+                            how_many_tests += 1 
                             lst.append(float(i['average']))
 
                 line = '-'*57 #a line over and under data
@@ -178,7 +175,7 @@ def averagebyteacher():
                     print('The given teacher does not exist in the history!')
                     continue
 
-                print(f'{line}\nThe class average of {teacher} is {round(avrg, 1)}% in the last {how_many_test} tests\n{line}')
+                print(f'{line}\nThe class average of {teacher} is {round(avrg, 1)}% in the last {how_many_tests} tests\n{line}')
                 exit()
 
 
@@ -198,11 +195,9 @@ def main():
     if len(sys.argv) < 2:
         sys.exit('No enough arguments on the terminal!\n' '-h for help')
     command = dict_.get(sys.argv[1].lower())
-    if command:
-        command()
-    else:
-        sys.exit('Uknown command!' \
-        '-h for help')
+    if command: command()
+    else: sys.exit('Uknown command!' \
+          '-h for help')
 
 if __name__ == '__main__':
-    main()
+    main()``
