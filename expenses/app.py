@@ -77,7 +77,7 @@ def how_much():
                 for l in range(len(differences)):
                     usr = input(f"{differences[0+l]} day difference found! Still continue (y/n)? ")
                 if usr == 'y':
-                    print(f'{'-'*30}\nThe total spent money in {days} days is {total} | overall {sum(differences)} day difference')
+                    print(f'{'-'*30}\nThe total spent money in {days} days is {total} | overall a {sum(differences)} day difference')
                     print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
                     break
                 elif user == 'n': sys.exit('Successfully quit!')
@@ -157,7 +157,7 @@ def add_to_total():
 
 
 funcs = {
-    'last': how_much,
+    'average': how_much,
     'add': add_to_total,
     'new': new,
     '-h': lambda: [print('*',i) for i in funcs.keys()]
@@ -168,10 +168,8 @@ def main():
     if len(sys.argv) < 2:
         sys.exit('Not enough arguments on the terminal!\n -h for help`')
     command = funcs.get(" ".join(sys.argv[1:]))# .get() returns boolean or None
-    if command:
-        command()
-    else:
-        sys.exit('Uknown function!')
+    if command: command()
+    else: sys.exit('Uknown function!')
 
 
 if __name__ == "__main__":
