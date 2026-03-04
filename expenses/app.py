@@ -3,8 +3,35 @@ import csv
 from datetime import datetime
 import collections
 import json
+import os
 from modifier import modify
+    
+#add currency to the places where it is needed
+class Checker:
+    def checker(self):
+        if os.path.getsize('category.json') == 0:
+            
+            self.currency_ = input('Hello! Before using the app you must specify the currency: ')
+            self.total = float(input('Also the total amount of money you have: '))
+            with open('category.json', 'w') as f:
+                json_dict = {
+                    'currency': {
+                        'type': str(self.currency_)
+                    },
+                    "total_money": {
+                        'amount': self.total
+                    }
+                }
+                json.dump(json_dict,f,indent=4)
+        else:pass
+    def currency(self):
+        with open('category.json') as f:
+            reader = json.load(f)
+        return reader['currency']['type']
 
+checker = Checker()
+if os.path.getsize('category.json') == 0: pass
+else: currency = checker.currency()
 
 date_s = datetime.now().astimezone()
 
@@ -36,10 +63,10 @@ class Transaction:
 
 def how_much():
     differences = []
-    total = 0
-    days = int(input("Enter the number of days you wanna see: "))
     lst = []
     nums = []
+    total = 0
+    days = int(input("Enter the number of days you wanna see: "))
 
     with open('date.json') as f:
 
@@ -56,10 +83,9 @@ def how_much():
                 pass
             
         if days > len(nums):
-            ndays = days - len(nums)
-            fdays = days - ndays
+            days = len(nums)
             while True:
-                user = input(f'There are only {fdays} days available still continue? y/n: ')
+                user = input(f'{'-'*52}\nThere are only {days} days available. Still continue? y/n\n{'-'*52}\n> ')
                 if user == 'y': break
                 elif user == 'n': sys.exit('successfully quit!')
                 else: 
@@ -75,18 +101,18 @@ def how_much():
         while True:
             if differences:
                 for l in range(len(differences)):
-                    usr = input(f"{differences[0+l]} day difference found! Still continue (y/n)? ")
+                    usr = input(f"{'-'*45}\n{differences[0+l]} day difference found! Still continue? y/n\n{'-'*45}\n> ")
                 if usr == 'y':
-                    print(f'{'-'*30}\nThe total spent money in {days} days is {total} | overall a {sum(differences)} day difference')
-                    print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                    print(f'{'-'*71}\nThe total spent money in {days} days is {total} {currency} | overall a {sum(differences)} day difference')
+                    print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}{currency}\n{'-'*71}')
                     break
                 elif user == 'n': sys.exit('Successfully quit!')
                 else:
                     print('Uknown input!')
                     continue
             else:
-                print(f'{'-'*30}\nThe total spent money in {days} days is {total}')
-                print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*30}')
+                print(f'{'-'*48}\nThe total spent money in {days} days is {total}')
+                print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*48}')
                 break
 def new():
 
@@ -135,7 +161,7 @@ def new():
         if str(date_s.day) in reader:
             famount += reader[str(date_s.day)]['amount']
 
-        reader[str(date_s.day)] = {
+        reader[day] = {
             'amount': famount
             }
         
@@ -156,6 +182,7 @@ def add_to_total():
         json.dump(dict_,f, indent=4)
 
 
+
 funcs = {
     'average': how_much,
     'add': add_to_total,
@@ -173,5 +200,6 @@ def main():
 
 
 if __name__ == "__main__":
+    checker.checker()
     modify()
     main()
