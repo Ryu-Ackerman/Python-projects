@@ -111,8 +111,8 @@ def how_much():
                     print('Uknown input!')
                     continue
             else:
-                print(f'{'-'*48}\nThe total spent money in {days} days is {total}')
-                print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}\n{'-'*48}')
+                print(f'{'-'*48}\nThe total spent money in {days} days is {total} {currency}')
+                print(f'The average spent money in the {days} days is {round(sum(nums)/len(nums), 1)}{currency}\n{'-'*48}')
                 break
 def new():
 
