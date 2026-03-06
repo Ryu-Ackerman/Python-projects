@@ -1,0 +1,31 @@
+{
+ "Monday": {
+  "max": 14.5,
+  "min": 6.0
+ },
+ "Tuesday": {
+  "max": 11.4,
+  "min": 5.8
+ },
+ "Wednesday": {
+  "max": 6.5,
+  "min": 4.6
+ },
+ "Thursday": {
+  "max": 7.2,
+  "min": 4.4
+ },
+ "Friday": {
+  "max": 10.1,
+  "min": 4.6,
+  "today": true
+ },
+ "Saturday": {
+  "max": 15.5,
+  "min": 5.0
+ },
+ "Sunday": {
+  "max": 17.4,
+  "min": 6.0
+ }
+}
