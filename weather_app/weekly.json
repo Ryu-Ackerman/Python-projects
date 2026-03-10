@@ -1,0 +1,37 @@
+{
+ "configs": {
+  "country": "samarkand",
+  "longitude": 66.95972,
+  "latitude": 39.65417,
+  "starting_date": "2026-03-09"
+ },
+ "Monday": {
+  "max": 14.3,
+  "min": 4.6
+ },
+ "Tuesday": {
+  "max": 4.0,
+  "min": -2.3,
+  "today": true
+ },
+ "Wednesday": {
+  "max": 2.4,
+  "min": -3.6
+ },
+ "Thursday": {
+  "max": 6.6,
+  "min": -5.0
+ },
+ "Friday": {
+  "max": 11.1,
+  "min": -0.9
+ },
+ "Saturday": {
+  "max": 12.7,
+  "min": 1.2
+ },
+ "Sunday": {
+  "max": 12.1,
+  "min": 2.6
+ }
+}
