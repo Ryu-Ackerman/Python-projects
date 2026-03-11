@@ -4,7 +4,7 @@ from datetime import datetime
 import collections
 import json
 import os
-from modifier import modify
+from modifier import modify, track_limit
 
 class Checker:
     def checker(self):
@@ -36,7 +36,9 @@ date_s = datetime.now().astimezone()
 
 
 if date_s.month < 10: month = f"0{date_s.month}"
+else:month = str(date_s.month)
 if date_s.day < 10: day = f"0{date_s.day}"
+else:day = str(date_s.day)
 
 
 local_ = f"{date_s.year}-{month}-{day}"
@@ -200,5 +202,6 @@ def main():
 
 if __name__ == "__main__":
     checker.checker()
+    track_limit()
     modify()
     main()

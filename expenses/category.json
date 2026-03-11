@@ -3,9 +3,9 @@
         "type": "sum"
     },
     "total_money": {
-        "amount": 60000.0
+        "amount": 150000.0
     },
     "transport": {
-        "amount": 40000.0
+        "amount": 45000.0
     }
 }
