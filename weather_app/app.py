@@ -8,7 +8,7 @@ from timezonefinder import TimezoneFinder
 from zoneinfo import ZoneInfo
 from collections import deque
 from cleaner import clean, checker #function from cleaner.py 
-
+from typing import Any as any
 
 class Collect_data():
 
@@ -21,7 +21,7 @@ class Collect_data():
         self.date = date
 
 
-    def turn_dict(self):
+    def turn_dict(self) -> dict[str, any]:
 
         return {
             'city': self.city,
@@ -32,7 +32,7 @@ class Collect_data():
 
 class Returner:
     
-    def finder(self):
+    def finder(self) -> None:
         lst =  []
         while True:
             
@@ -60,6 +60,7 @@ class Returner:
 
                     for index, i in enumerate(j['results']):#list all the available cities/countries with the given name
                         print(f"{index+1}){i['name']}, {i['country']}")
+                        
                 except KeyError:
                     print('Invalid city/country name!')
                     self.c = input('Enter the city/country name: ')
@@ -71,7 +72,7 @@ class Returner:
 
                     try:
 
-                        user = input("Enter the number of the intended city/country: ").lower()
+                        user: str = input("Enter the number of the intended city/country: ").lower()
                         if int(user) < 1 or int(user) > len(j['results']):#if the user chooses a number that does not match the index start the loop again
 
                             print('Input out of range!')
@@ -112,7 +113,7 @@ MONTHS = {
 
 
 
-def forecast():
+def forecast()-> None:
     returner.finder()
     try:
         api3 = f"https://api.open-meteo.com/v1/forecast?latitude={returner.latitude}&longitude={returner.longitude}&current_weather=true&hourly=temperature_2m,precipitation_probability&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto"
@@ -122,19 +123,19 @@ def forecast():
         j2 = r2.json()
         units = j2['daily']
         ind = range(1,8)
-        maxt = units['temperature_2m_max']#highest temperature
-        mint = units['temperature_2m_min']#lowest temperature
+        maxt: list[float] = units['temperature_2m_max']#highest temperature
+        mint: list[float] = units['temperature_2m_min']#lowest temperature
 
 
         tf = TimezoneFinder()
-        zone = tf.timezone_at(
+        zone: str|None = tf.timezone_at(
             lng=returner.longitude,
             lat=returner.latitude
         )
 
 
-        current = datetime.now(ZoneInfo(zone))
-        day = current.strftime('%A')#finding the day of the week with a given city/country name
+        current: datetime = datetime.now(ZoneInfo(zone))
+        day: str = current.strftime('%A')#finding the day of the week with a given city/country name
 
         ind_day = [inde for inde,i in enumerate(WEEK) if i == day][0]#[0] at the end cuz inde returns a list and to extract a value from it we just specify the item we want    
         dates = j2['daily']['time'] 
@@ -153,8 +154,8 @@ def forecast():
 
         for z,i,x,y,t in zip(ind,maxt, mint, range(7), dates):
 
-            month = MONTHS[str(t[5:7])]
-            day = t[8:10]
+            month: str = MONTHS[str(t[5:7])]
+            day: str = t[8:10]
 
             y = (ind_day+y)%7#the remainder is the day of the week in sequence, if it is wednesday the ind_day is 3 and it will be added 0 first and wednesday will be given, then 1 will be added and index 4 and thursday
             if 0 < i < 10.0: i = f"0{i}"
@@ -189,8 +190,8 @@ def get_country():
         j2 = j_2['current_weather']
         temp = j2['temperature']
         w_S = j2['windspeed']
-        day = j2['is_day']
-        date = j2['time']
+        day: int = j2['is_day']
+        date: int = j2['time']
         
         l = '-'*26
         print(f"{l}\nThe temperature is {temp}°C")
@@ -214,7 +215,7 @@ def get_country():
 
 
 
-def days(directory, num_of_days, c_name):#an average temperature and windspeed calculator in a given number of searches from the user input
+def days(directory: str, num_of_days: int, c_name: str) -> None:#an average temperature and windspeed calculator in a given number of searches from the user input
     nm = []
     tem = []
     w__s = []
@@ -256,17 +257,17 @@ def set_week():
                 j = r.json()
 
                 tf = TimezoneFinder()
-                zone = tf.timezone_at(
+                zone: str = tf.timezone_at(
                     lng=returner.longitude,
                     lat=returner.latitude
                 )
 
-                current = datetime.now(ZoneInfo(zone))
-                day = current.strftime('%A')#finding the day of the week with a given city/country name
+                current: datetime = datetime.now(ZoneInfo(zone))
+                day: str = current.strftime('%A')#finding the day of the week with a given city/country name
 
                 inde = [inde for inde,h in enumerate(WEEK) if h == day][0]
-                maxt = j['daily']['temperature_2m_max']
-                mint = j['daily']['temperature_2m_min']
+                maxt: list[float] = j['daily']['temperature_2m_max']
+                mint: list[float] = j['daily']['temperature_2m_min']
 
                 y = len(WEEK[0:inde])
                 starting_date = j['daily']['time'][7-y]
